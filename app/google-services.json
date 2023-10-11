@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "935756555967",
+    "project_id": "id385-7aa4f",
+    "storage_bucket": "id385-7aa4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935756555967:android:641f8991b94e482d9b480a",
+        "android_client_info": {
+          "package_name": "com.creativeminds.imaginationworld.fantasticodyssey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935756555967-avjgpa4g2popmkmi929mgptvvdgqqsrj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb5qMjFlz7zQ4i_22bNs_6Vkh0AfqrRg0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935756555967-avjgpa4g2popmkmi929mgptvvdgqqsrj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -3,7 +3,7 @@ package com.creativeminds.imaginationworld.fantasticodyssey.api
 import android.content.Context
 import androidx.core.content.edit
 
-class PrefHelper(private val context: Context) {
+class PrefHelper private constructor(private val context: Context) {
 
     fun saveUserAgree(agree: Boolean) {
         val sharedPreferences =

@@ -14,13 +14,12 @@ import com.creativeminds.imaginationworld.fantasticodyssey.databinding.FragmentU
 
 class UserAgreement : Fragment() {
     lateinit var binding: FragmentUserAgreementBinding
-    lateinit var prefHelper: PrefHelper
+    val prefHelper = PrefHelper.getInstance(requireContext().applicationContext)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentUserAgreementBinding.inflate(layoutInflater)
-        prefHelper = PrefHelper(requireContext().applicationContext)
         return binding.root
     }
 

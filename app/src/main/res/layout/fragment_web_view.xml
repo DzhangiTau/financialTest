@@ -48,13 +48,15 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/invalidConnection"
-        android:textColor="#050434"
         android:textAlignment="center"
+        android:textColor="#050434"
         android:textSize="24sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

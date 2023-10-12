@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         //MyTrackerInit
         if (viewModel.isInternetAvaliable()) {
-
+            viewModel.init()
             val trackerParams = MyTracker.getTrackerParams()
             trackerParams.customUserId = Settings.Secure.ANDROID_ID
 

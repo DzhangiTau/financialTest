@@ -62,11 +62,11 @@ class ViewModelResponse(application: Application) : AndroidViewModel(application
     private var _isLoading = MutableLiveData<Boolean>(true)
     val isLoading: LiveData<Boolean> = _isLoading
 
-    init {
+    fun init() {
         Log.d("DEBUG SPIDER NET", "ViewModelResponse init")
         viewModelScope.launch {
             if (isInternetAvaliable()) {
-                prepareArguments(application.applicationContext)
+                prepareArguments(getApplication<BankApplication>().applicationContext)
                 getActualBackend()
                 if (!needToRequestRemote()) {
                     apiProvider.clearCache()
@@ -83,6 +83,10 @@ class ViewModelResponse(application: Application) : AndroidViewModel(application
                 return@launch
             }
         }
+    }
+
+    init {
+
     }
 
     private suspend fun getActualBackend() {

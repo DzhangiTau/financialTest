@@ -82,9 +82,6 @@
             android:id="@+id/action_cards_to_webViewFragment"
             app:destination="@id/webViewFragment" />
         <action
-            android:id="@+id/action_cards_self"
-            app:destination="@id/cards" />
-        <action
             android:id="@+id/action_cards_to_anyCardMoreDetailsFragment"
             app:destination="@id/anyCardMoreDetailsFragment" />
     </fragment>
@@ -147,9 +144,6 @@
         <action
             android:id="@+id/action_anyCardMoreDetailsFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
-        <action
-            android:id="@+id/action_anyCardMoreDetailsFragment_self"
-            app:destination="@id/anyCardMoreDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/creditMoreDetailsFragment"

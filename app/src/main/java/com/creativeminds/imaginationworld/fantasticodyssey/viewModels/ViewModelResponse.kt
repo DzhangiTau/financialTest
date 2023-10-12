@@ -34,6 +34,8 @@ import org.json.JSONObject
 
 class ViewModelResponse(application: Application) : AndroidViewModel(application) {
 
+    val prefHelper = PrefHelper.getInstance(application.applicationContext)
+
     private val gson = GsonBuilder().create()
     private val apiProvider = ApiProvider.getInstance(application.applicationContext)
 

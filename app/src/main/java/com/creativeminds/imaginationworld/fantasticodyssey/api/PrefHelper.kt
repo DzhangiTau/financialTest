@@ -28,4 +28,14 @@ class PrefHelper(private val context: Context) {
             context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString("last-modified", null)
     }
+
+    companion object {
+        @Volatile
+        private var instance: PrefHelper? = null
+        fun getInstance(context: Context): PrefHelper {
+            return instance ?: synchronized(this) {
+                instance ?: PrefHelper(context.applicationContext).also { instance = it }
+            }
+        }
+    }
 }

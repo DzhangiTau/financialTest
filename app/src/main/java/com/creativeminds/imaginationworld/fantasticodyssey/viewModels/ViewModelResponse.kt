@@ -31,8 +31,11 @@ import com.google.gson.GsonBuilder
 import com.yandex.metrica.YandexMetrica
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 
 class ViewModelResponse(application: Application) : AndroidViewModel(application) {
+
+    val prefHelper = PrefHelper.getInstance(application.applicationContext)
 
     private val gson = GsonBuilder().create()
     private val apiProvider = ApiProvider.getInstance(application.applicationContext)
@@ -168,9 +171,9 @@ class ViewModelResponse(application: Application) : AndroidViewModel(application
         if (lastModifiedDate == null) return false
 
         val isDatesMatch: Boolean =
-            PrefHelper(getApplication<Application>().applicationContext).getLastModifiedDate() == lastModifiedDate.date
+            prefHelper.getLastModifiedDate() == lastModifiedDate.date
         if (!isDatesMatch) {
-            PrefHelper(getApplication<Application>().applicationContext).saveLastDateModified(
+            prefHelper.saveLastDateModified(
                 lastModifiedDate.date
             )
         }

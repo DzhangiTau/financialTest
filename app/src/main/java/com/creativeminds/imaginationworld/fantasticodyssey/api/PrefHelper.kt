@@ -3,7 +3,7 @@ package com.creativeminds.imaginationworld.fantasticodyssey.api
 import android.content.Context
 import androidx.core.content.edit
 
-class PrefHelper(private val context: Context) {
+class PrefHelper private constructor(private val context: Context) {
 
     fun saveUserAgree(agree: Boolean) {
         val sharedPreferences =
@@ -27,5 +27,15 @@ class PrefHelper(private val context: Context) {
         val sharedPreferences =
             context.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString("last-modified", null)
+    }
+
+    companion object {
+        @Volatile
+        private var instance: PrefHelper? = null
+        fun getInstance(context: Context): PrefHelper {
+            return instance ?: synchronized(this) {
+                instance ?: PrefHelper(context.applicationContext).also { instance = it }
+            }
+        }
     }
 }

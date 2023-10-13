@@ -35,6 +35,6 @@ object Store {
     )
     val deviceId = mutableMapOf<String, String>()
     var requestArguments = ParamsForQuery()
-    var actualBackend: String = ""
+    var actualBackend: Backend? = null
     var dataSubs = mutableMapOf<String, String?>()
 }

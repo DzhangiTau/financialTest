@@ -107,14 +107,18 @@ class ViewModelResponse(application: Application) : AndroidViewModel(application
                 p13 = requestArguments.p13,
                 p14 = requestArguments.p14,
             )
-        Store.actualBackend = actualBackend?.actualbackend ?: ""
+        Store.actualBackend = actualBackend
     }
 
 
     private suspend fun getProducts() {
-        if (actualBackend == "" || actualBackend == "null") return
+        if (actualBackend == null || actualBackend?.actualbackend == "" || actualBackend?.actualbackend == "null") return
 
-        val response: Response? = apiProvider.apiService.getResponse(actualBackend)
+        val response: Response? = actualBackend?.actualbackend?.let {
+            apiProvider.apiService.getResponse(
+                it
+            )
+        }
 
         if (response == null) {
             Event().trackEventMyTracker("requestdb")
@@ -168,7 +172,11 @@ class ViewModelResponse(application: Application) : AndroidViewModel(application
     private suspend fun needToRequestRemote(): Boolean {
         var lastModifiedDate: LastModified? = null
         try {
-            lastModifiedDate = apiProvider.apiService.getRefreshDate(actualBackend)
+            lastModifiedDate = actualBackend?.actualbackend?.let {
+                apiProvider.apiService.getRefreshDate(
+                    it
+                )
+            }
         } catch (e: Exception) {
             Log.e("error", e.message ?: "")
         }

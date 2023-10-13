@@ -1,9 +1,10 @@
 package com.creativeminds.imaginationworld.fantasticodyssey.view.internetAvaliable
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -25,8 +26,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.RECEIVER_NOT_EXPORTED
-import androidx.core.content.ContextCompat.registerReceiver
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -46,7 +47,7 @@ class WebViewFragment : Fragment() {
     private var mFilePathCallback: ValueCallback<Array<Uri>>? = null
     private var mCapturedImageURI: Uri? = null
     private var mCameraPhotoPath: String? = null
-
+    private val CAMERA_PERMISSION_REQUEST_CODE = 100
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +66,16 @@ class WebViewFragment : Fragment() {
             } else {
                 findNavController().navigateUp()
             }
+        }
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Разрешение на использование камеры не предоставлено, запрашиваем его у пользователя
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
         }
 
         binding.webView.webViewClient = object : WebViewClient() {
@@ -91,7 +102,7 @@ class WebViewFragment : Fragment() {
 
         val webSettings = binding.webView.settings
         supportWebView(webSettings)
-        
+
         if (isInternetAvaliable()) {
             viewModel.orderLink.observe(viewLifecycleOwner) { url ->
                 binding.webView.loadUrl(url)
@@ -203,6 +214,7 @@ class WebViewFragment : Fragment() {
             return true
         }
 
+
         // openFileChooser for Android 3.0+
         // openFileChooser for Android < 3.0
         @JvmOverloads
@@ -312,6 +324,29 @@ class WebViewFragment : Fragment() {
         }
         return
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Разрешение на использование камеры было предоставлено, выполняем необходимые действия
+
+            } else {
+                // Разрешение на использование камеры не было предоставлено, обрабатываем эту ситуацию
+                Toast.makeText(
+                    requireContext(),
+                    "Разрешение на использование камеры не предоставлено",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
 
     companion object {
         private const val INPUT_FILE_REQUEST_CODE = 1

@@ -14,7 +14,6 @@ import com.creativeminds.imaginationworld.fantasticodyssey.databinding.FragmentU
 
 class UserAgreement : Fragment() {
     lateinit var binding: FragmentUserAgreementBinding
-    val prefHelper = PrefHelper.getInstance(requireContext().applicationContext)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,6 +24,7 @@ class UserAgreement : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val prefHelper = PrefHelper.getInstance(requireContext())
         if (prefHelper.getSavedUserAgree()) {
             findNavController().navigate(R.id.action_userAgreement_to_firstFragment)
         } else {

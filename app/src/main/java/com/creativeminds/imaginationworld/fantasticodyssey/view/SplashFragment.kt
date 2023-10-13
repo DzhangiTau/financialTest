@@ -36,7 +36,7 @@ class SplashFragment : Fragment() {
         } else {
             viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
                 if (!isLoading) {
-                    if (Store.actualBackend != "null" || Store.actualBackend != "") {
+                    if (Store.actualBackend?.actualbackend != "null" && Store.actualBackend?.actualbackend != "" && Store.actualBackend != null) {
                         when {
                             viewModel.loans.value != null -> findNavController().navigate(R.id.action_splashFragment_to_loans)
                             viewModel.credits.value != null -> findNavController().navigate(R.id.action_splashFragment_to_credit)

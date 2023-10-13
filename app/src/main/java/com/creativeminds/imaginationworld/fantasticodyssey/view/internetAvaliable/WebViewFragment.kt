@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat.registerReceiver
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.creativeminds.imaginationworld.fantasticodyssey.R
 import com.creativeminds.imaginationworld.fantasticodyssey.databinding.FragmentWebViewBinding
 import com.creativeminds.imaginationworld.fantasticodyssey.viewModels.ViewModelResponse
 import java.io.File
@@ -112,7 +113,10 @@ class WebViewFragment : Fragment() {
 
     fun showErrorConnection() {
         binding.webView.visibility = View.GONE
-        binding.tvErrorConnection.visibility = View.VISIBLE
+        binding.invalidConnectionLayout.visibility = View.VISIBLE
+        binding.button.setOnClickListener {
+            findNavController().navigate(R.id.action_webViewFragment_self)
+        }
     }
 
 

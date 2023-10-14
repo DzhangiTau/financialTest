@@ -20,6 +20,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -41,6 +42,19 @@ class WebViewFragment : Fragment() {
     private var mFilePathCallback: ValueCallback<Array<Uri>>? = null
     private var pictureFromCameraFileName: String = ""
     private var pictureFromCameraFile: File = File("")
+
+    private val getResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode != AppCompatActivity.RESULT_OK) return@registerForActivityResult
+            mFilePathCallback!!.onReceiveValue(
+                if (result.data?.dataString == null) {
+                    arrayOf(getImageUri(pictureFromCameraFile))
+                } else {
+                    arrayOf(Uri.parse(result.data?.dataString))
+                }
+            )
+            mFilePathCallback = null
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -167,34 +181,12 @@ class WebViewFragment : Fragment() {
                     .putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
                     .putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(takePictureIntent))
 
-            startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE)
+            getResult.launch(chooserIntent)
             return true
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode != INPUT_FILE_REQUEST_CODE || mFilePathCallback == null) {
-            super.onActivityResult(requestCode, resultCode, data)
-            return
-        }
-        var results: Array<Uri>? = null
-
-        if (resultCode == AppCompatActivity.RESULT_OK) {
-            results = if (data?.dataString == null) {
-                arrayOf(getImageUri(pictureFromCameraFile))
-            } else {
-                arrayOf(Uri.parse(data.dataString))
-            }
-        }
-
-        mFilePathCallback!!.onReceiveValue(results)
-        mFilePathCallback = null
-        return
-    }
-
     companion object {
-        private const val INPUT_FILE_REQUEST_CODE = 1
         private const val CAMERA_PERMISSION_REQUEST_CODE = 100
     }
 }

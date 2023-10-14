@@ -16,7 +16,6 @@ class BankApplication : Application() {
         super.onCreate()
         ApiProvider.getInstance(this)
         initAppMetrica()
-        UserX.init(Store.dataMap[Store.USERX_KEY])
     }
 
     private fun initAppMetrica() {

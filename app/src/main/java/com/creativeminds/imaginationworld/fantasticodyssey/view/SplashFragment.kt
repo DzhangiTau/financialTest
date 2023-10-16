@@ -50,7 +50,7 @@ class SplashFragment : Fragment() {
                         }
                     } else {
                         findNavController().navigate(R.id.action_splashFragment_to_userAgreement)
-                        val eventParams = mapOf(Pair("GAID", Store.requestArguments.p8!!))
+                        val eventParams = mapOf(Pair("GAID", Store.requestArguments.p8.toString()))
                         MyTracker.trackEvent("actualbackend_null", eventParams)
                         Event().trackEventAppsFlyer(
                             requireContext().applicationContext,

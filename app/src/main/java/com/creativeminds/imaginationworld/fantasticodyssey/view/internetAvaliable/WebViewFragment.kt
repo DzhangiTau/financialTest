@@ -20,6 +20,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -83,7 +84,20 @@ class WebViewFragment : Fragment() {
             )
         }
 
-        binding.webView.webViewClient = WebViewClient()
+        binding.webView.webViewClient = object : WebViewClient() {
+            override fun onReceivedError(
+                view: WebView?,
+                errorCode: Int,
+                description: String?,
+                failingUrl: String?
+            ) {
+                if (errorCode == ERROR_CONNECT || errorCode == ERROR_HOST_LOOKUP) {
+                    showErrorConnection()
+                } else {
+                    super.onReceivedError(view, errorCode, description, failingUrl)
+                }
+            }
+        }
         binding.webView.webChromeClient = ChromeClient()
 
         // show previous page if a user presses back button
@@ -119,7 +133,15 @@ class WebViewFragment : Fragment() {
         binding.webView.visibility = View.GONE
         binding.invalidConnectionLayout.visibility = View.VISIBLE
         binding.button.setOnClickListener {
-            findNavController().navigate(R.id.action_webViewFragment_self)
+            if (isInternetAvailable() && binding.webView.canGoBack()) {
+                binding.invalidConnectionLayout.visibility = View.GONE
+                binding.webView.visibility = View.VISIBLE
+                binding.webView.goBack()
+            } else {
+                findNavController().navigateUp()
+            }
+
+
         }
     }
 
@@ -189,6 +211,11 @@ class WebViewFragment : Fragment() {
             return true
         }
     }
+
+    inner class CustomWebViewClient : WebViewClient() {
+
+    }
+
 
     companion object {
         private const val CAMERA_PERMISSION_REQUEST_CODE = 100

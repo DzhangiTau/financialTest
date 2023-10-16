@@ -33,6 +33,9 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.seekBarAmount.max = 30 - 5
         binding.seekBarTerm.max = 360 - 95
+        binding.seekBarAmount.progress = 11
+        binding.seekBarTerm.progress = 120
+        updateLoanSummary()
 
         binding.seekBarAmount.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -71,7 +74,7 @@ class FirstFragment : Fragment() {
         val interestRate = 0.1
         val loanDays = loanTerm
         val totalAmount = loanAmount * (1 + interestRate / 100).pow(loanDays)
-        val decimal = BigDecimal(totalAmount).setScale(2,RoundingMode.HALF_EVEN)
+        val decimal = BigDecimal(totalAmount).setScale(2, RoundingMode.HALF_EVEN)
         binding.tvLoan.text = loanAmount.toString()
         binding.tvTerm.text = loanTerm.toString()
         binding.tvSum.text = decimal.toString()

@@ -33,7 +33,7 @@ class TimerFragment : Fragment() {
 
     private fun timer(timeMillis: Long) {
 
-        timer?.cancel()
+        //   timer?.cancel()
         timer = object : CountDownTimer(timeMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val minutes = millisUntilFinished / 60000
@@ -47,5 +47,10 @@ class TimerFragment : Fragment() {
             }
 
         }.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer?.cancel()
     }
 }

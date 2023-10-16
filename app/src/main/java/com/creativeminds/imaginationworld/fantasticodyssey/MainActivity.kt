@@ -16,6 +16,7 @@ import com.creativeminds.imaginationworld.fantasticodyssey.viewModels.ViewModelR
 import com.my.tracker.MyTracker
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import pro.userx.UserX
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[ViewModelResponse::class.java]
+        UserX.init(Store.dataMap[Store.USERX_KEY])
 
         //MyTrackerInit
         if (viewModel.isInternetAvaliable()) {

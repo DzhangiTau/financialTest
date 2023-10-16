@@ -36,12 +36,6 @@ class SecondFragment : Fragment() {
 
     }
 
-    fun isEmailValid(email: String): Boolean {
-        val regex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
-        return regex.matches(email)
-    }
-
-
     fun checkInputText(): Boolean {
         var check: Boolean = false
         when {
@@ -60,12 +54,12 @@ class SecondFragment : Fragment() {
                 R.string.poleIsNull
             )
 
-            binding.tvPhone.text?.length != 10 -> errorDialog(
+            binding.tvPhone.text?.toString() == "" -> errorDialog(
                 R.string.error,
                 R.string.wrongPhoneFormat
             )
 
-            !isEmailValid(binding.tvEmail.text.toString()) -> errorDialog(
+            binding.tvEmail.text.toString() == "" -> errorDialog(
                 R.string.error,
                 R.string.wrongMailFormat
             )
